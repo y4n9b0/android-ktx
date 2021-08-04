@@ -1,7 +1,18 @@
-# android-ktx
+# android-ktx [![](https://jitpack.io/v/1step2hell/android-ktx.svg)](https://jitpack.io/#1step2hell/android-ktx)
 
-## Download
+Step 1. Add the JitPack repository to your build file
+```groovy
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
 
-```txt
-implementation 'com.step2hell.android:android-ktx:1.0.0-SNAPSHOT'
+Step 2. Add the dependency
+```groovy
+dependencies {
+    implementation 'com.github.1step2hell:android-ktx:dev-SNAPSHOT'
+}
 ```
