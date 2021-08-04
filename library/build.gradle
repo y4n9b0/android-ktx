@@ -52,3 +52,4 @@ dependencies {
 }
 
 apply from: "${rootDir}/flatDeps.gradle"
+apply from: "${rootDir}/ktlint.gradle"
