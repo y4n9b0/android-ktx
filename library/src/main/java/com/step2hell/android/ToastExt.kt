@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 
 @IntDef(value = [Toast.LENGTH_SHORT, Toast.LENGTH_LONG])
 @Retention(AnnotationRetention.SOURCE)
-annotation class Duration
+internal annotation class Duration
 
 @Throws(Resources.NotFoundException::class)
 fun Context.toast(@StringRes resId: Int, @Duration duration: Int = Toast.LENGTH_SHORT): Context = apply {
