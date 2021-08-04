@@ -13,6 +13,6 @@ allprojects {
 Step 2. Add the dependency
 ```groovy
 dependencies {
-    implementation 'com.github.1step2hell:android-ktx:dev-SNAPSHOT'
+    implementation 'com.github.1step2hell:android-ktx:1.0.0-SNAPSHOT'
 }
 ```
