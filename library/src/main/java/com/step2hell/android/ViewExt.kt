@@ -22,7 +22,7 @@ import kotlin.internal.InlineOnly
 
 @IntDef(value = [View.VISIBLE, View.INVISIBLE, View.GONE])
 @Retention(AnnotationRetention.SOURCE)
-annotation class Visibility
+internal annotation class Visibility
 
 @InlineOnly
 inline fun View.visibleIf(bool: Boolean, @Visibility `else`: Int = View.GONE): View = apply {
