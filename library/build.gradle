@@ -53,3 +53,4 @@ dependencies {
 
 apply from: "${rootDir}/flatDeps.gradle"
 apply from: "${rootDir}/ktlint.gradle"
+apply from: "${rootDir}/mvn-publish.gradle"

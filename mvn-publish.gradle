@@ -1,36 +1,17 @@
 /**
  * https://docs.gradle.org/current/userguide/publishing_maven.html
  * https://developer.android.google.cn/studio/build/maven-publish-plugin
+ * https://github.com/jitpack/android-example/blob/master/library/build.gradle
  */
 apply plugin: 'maven-publish'
 
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-
-group = "com.github.1step2hell"
-version = "1.0.0-SNAPSHOT"
-
-publishing {
-    publications {
-        shoppingcart(MavenPublication) {
-            afterEvaluate { from components.release }
-            // 上传source
-            artifact generateSourcesJar
-            artifactId = "android-ktx"
-        }
-    }
-
-    repositories {
-        maven {
-            url = version.endsWith("SNAPSHOT")
-                    ? "http://artifactory.jd.com/libs-snapshots-local"
-                    : "http://artifactory.jd.com/libs-releases-local"
-            credentials {
-                // ~/.gradle/gradle.properties
-                username "${JD_MAVEN_USERNAME}"
-                password "${JD_MAVEN_PASSWORD}"
+afterEvaluate {
+    publishing {
+        publications {
+            akx(MavenPublication) {
+                from components.release
+                groupId = 'com.github.1step2hell'
+                artifactId = 'android-ktx'
             }
         }
     }
