@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             onClick = {
                 toast("click onClick $it")
             }
-        ).expandTouchArea(findViewById<ConstraintLayout>(R.id.relative), 50f.dp2px, 50f.dp2px, 100f.dp2px, 0)
+        ).expandTouchArea(findViewById<ConstraintLayout>(R.id.relative), 50.dp2px, 50.dp2px, 100.dp2px, 0)
 
         findViewById<TextView>(R.id.text_greeting2).clicks(
             lifecycleScope
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
             toast("click onClick $it")
         }.expandTouchArea(
             findViewById<ConstraintLayout>(R.id.constraint),
-            50f.dp2px,
-            50f.dp2px,
-            100f.dp2px,
+            50.dp2px,
+            50.dp2px,
+            100.dp2px,
             0
         ).visibleIf(true, View.INVISIBLE)
 

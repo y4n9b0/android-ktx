@@ -27,5 +27,5 @@ val SCREEN_HEIGHT: Int
 val STATUS_BAR_HEIGHT: Int
     get() {
         val resId = system.getIdentifier("status_bar_height", "dimen", "android")
-        return if (resId != 0) system.getDimensionPixelSize(resId) else 24f.dp2px
+        return if (resId != 0) system.getDimensionPixelSize(resId) else 24.dp2px
     }
