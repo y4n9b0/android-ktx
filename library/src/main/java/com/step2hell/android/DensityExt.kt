@@ -6,17 +6,17 @@ import kotlin.math.roundToInt
 private val system = Resources.getSystem()
 private val metrics = system.displayMetrics
 
-val Float.dp2px
-    get() = times(metrics.density).roundToInt()
+val Number.dp2px
+    get() = toFloat().times(metrics.density).roundToInt()
 
-val Float.sp2px
-    get() = times(metrics.scaledDensity).roundToInt()
+val Number.sp2px
+    get() = toFloat().times(metrics.scaledDensity).roundToInt()
 
-val Float.px2dp
-    get() = div(metrics.density).roundToInt()
+val Number.px2dp
+    get() = toFloat().div(metrics.density).roundToInt()
 
-val Float.px2sp
-    get() = div(metrics.scaledDensity).roundToInt()
+val Number.px2sp
+    get() = toFloat().div(metrics.scaledDensity).roundToInt()
 
 val SCREEN_WIDTH: Int
     get() = metrics.widthPixels
