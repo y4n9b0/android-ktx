@@ -61,9 +61,7 @@ inline fun View.clicks(
         this@clicks.setOnClickListener { trySend(System.currentTimeMillis()) }
         awaitClose { this@clicks.setOnClickListener(null) }
     }.distinctUntilChanged { old, new ->
-        val equivalent = new - old < duration
-        if (equivalent) onIgnore(this@clicks, new - old)
-        equivalent
+        (new - old < duration).also { if (it) onIgnore(this@clicks, new - old) }
     }.onEach {
         onClick(this@clicks)
     }.launchIn(scope)
