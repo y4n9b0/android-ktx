@@ -25,21 +25,6 @@ import kotlin.internal.InlineOnly
 internal annotation class Visibility
 
 @InlineOnly
-inline fun View.visibleIf(bool: Boolean, @Visibility `else`: Int = View.GONE): View = apply {
-    visibility = if (bool) View.VISIBLE else `else`
-}
-
-@InlineOnly
-inline fun View.invisibleIf(bool: Boolean): View = apply {
-    visibility = if (bool) View.INVISIBLE else View.VISIBLE
-}
-
-@InlineOnly
-inline fun View.goneIf(bool: Boolean): View = apply {
-    visibility = if (bool) View.GONE else View.VISIBLE
-}
-
-@InlineOnly
 inline fun View.visible(): View = apply { visibility = View.VISIBLE }
 
 @InlineOnly
@@ -47,6 +32,17 @@ inline fun View.invisible(): View = apply { visibility = View.INVISIBLE }
 
 @InlineOnly
 inline fun View.gone(): View = apply { visibility = View.GONE }
+
+@InlineOnly
+inline fun View.invisibleIf(bool: Boolean): View = if (bool) invisible() else visible()
+
+@InlineOnly
+inline fun View.goneIf(bool: Boolean): View = if (bool) gone() else visible()
+
+@InlineOnly
+inline fun View.visibleIf(bool: Boolean, @Visibility `else`: Int = View.GONE): View = apply {
+    visibility = if (bool) View.VISIBLE else `else`
+}
 
 /**
  * 点击去重
