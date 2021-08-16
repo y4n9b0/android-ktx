@@ -11,6 +11,7 @@ import android.view.View.OnLayoutChangeListener
 import android.view.ViewGroup
 import androidx.annotation.IntDef
 import androidx.annotation.Px
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -86,30 +87,23 @@ fun View.expandTouchArea(
     @Px expandRight: Int = expandLeft,
     @Px expandBottom: Int = expandLeft
 ): View = apply {
-    addOnLayoutChangeListener(object : OnLayoutChangeListener {
-        override fun onLayoutChange(
-            view: View,
-            newLeft: Int, newTop: Int, newRight: Int, newBottom: Int,
-            oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
-        ) {
-            removeOnLayoutChangeListener(this)
-            val boss = IntArray(2)
-            val target = IntArray(2)
-            getLocationInWindow(boss)
-            ancestor.getLocationInWindow(target)
-            val l = boss[0] - target[0]
-            val t = boss[1] - target[1]
-            val r = l + width
-            val b = t + height
-            val bounds = Rect().apply {
-                top = t - expandTop
-                bottom = b + expandBottom
-                left = l - expandLeft
-                right = r + expandRight
-            }
-            ancestor.touchDelegate =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) TouchDelegate(bounds, view)
-                else TouchDelegateCompat(bounds, view)
+    doOnLayout {
+        val boss = IntArray(2)
+        val target = IntArray(2)
+        getLocationInWindow(boss)
+        ancestor.getLocationInWindow(target)
+        val l = boss[0] - target[0]
+        val t = boss[1] - target[1]
+        val r = l + width
+        val b = t + height
+        val bounds = Rect().apply {
+            top = t - expandTop
+            bottom = b + expandBottom
+            left = l - expandLeft
+            right = r + expandRight
         }
-    })
+        ancestor.touchDelegate =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) TouchDelegate(bounds, it)
+            else TouchDelegateCompat(bounds, it)
+    }
 }
