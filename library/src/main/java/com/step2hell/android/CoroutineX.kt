@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 inline fun <T> CoroutineScope.launch(
     context: CoroutineContext = CoroutineExceptionHandler { _, throwable -> onFailure(throwable) },
