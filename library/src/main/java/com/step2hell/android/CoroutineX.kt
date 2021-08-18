@@ -9,22 +9,17 @@ inline fun <T> CoroutineScope.launch(
     context: CoroutineContext = CoroutineExceptionHandler { _, throwable -> onFailure(throwable) },
     start: CoroutineStart = CoroutineStart.DEFAULT,
     crossinline action: suspend () -> Result<T>,
-    crossinline onStart: () -> Unit = {},
     crossinline onSuccess: (T?) -> Unit = {},
     crossinline onFailure: (Throwable) -> Unit = {}
-): Job = launch(context, start) {
-    onStart()
-    action().onSuccess(onSuccess).onFailure(onFailure)
-}
+): Job = launch(context, start) { action().onSuccess(onSuccess).onFailure(onFailure) }
 
 inline fun <T> ViewModel.launch(
     context: CoroutineContext = CoroutineExceptionHandler { _, throwable -> onFailure(throwable) },
     start: CoroutineStart = CoroutineStart.DEFAULT,
     crossinline action: suspend () -> Result<T>,
-    crossinline onStart: () -> Unit = {},
     crossinline onSuccess: (T?) -> Unit = {},
     crossinline onFailure: (Throwable) -> Unit = {}
-): Job = viewModelScope.launch(context, start, action, onStart, onSuccess, onFailure)
+): Job = viewModelScope.launch(context, start, action, onSuccess, onFailure)
 
 val coroutineExceptionHandler: ((Throwable) -> Unit).() -> CoroutineExceptionHandler = {
     CoroutineExceptionHandler { _, throwable -> this(throwable) }
