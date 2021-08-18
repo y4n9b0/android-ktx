@@ -28,7 +28,7 @@ val coroutineExceptionHandler: ((Throwable) -> Unit).() -> CoroutineExceptionHan
 private val jobs: MutableMap<String, Job> = mutableMapOf()
 fun Job.cancelLast(): Job = apply {
     val trace = Thread.currentThread().stackTrace[4]
-    val tag = trace.methodName + trace.lineNumber
+    val tag = "${trace.className}#${trace.methodName}#${trace.lineNumber}"
     jobs[tag]?.cancel()
     jobs[tag] = apply {
         invokeOnCompletion { jobs.remove(tag) }
