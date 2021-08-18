@@ -14,11 +14,7 @@ inline fun <T> CoroutineScope.launch(
     crossinline onFailure: (Throwable) -> Unit = {}
 ): Job = launch(context, start) {
     onStart()
-    action().onSuccess {
-        onSuccess(it)
-    }.onFailure {
-        onFailure(it)
-    }
+    action().onSuccess(onSuccess).onFailure(onFailure)
 }
 
 inline fun <T> ViewModel.launch(
@@ -30,19 +26,16 @@ inline fun <T> ViewModel.launch(
     crossinline onFailure: (Throwable) -> Unit = {}
 ): Job = viewModelScope.launch(context, start, action, onStart, onSuccess, onFailure)
 
-private val jobs: MutableMap<String, Job> = mutableMapOf()
-fun Job.cancelLast(): Job = apply {
-    val method = Thread.currentThread().stackTrace[4].methodName
-    val lineNumber = Thread.currentThread().stackTrace[4].lineNumber
-    val tag = method + lineNumber
-    jobs[tag]?.cancel()
-    jobs[tag] = apply {
-        invokeOnCompletion {
-            jobs.remove(tag)
-        }
-    }
-}
-
 val coroutineExceptionHandler: ((Throwable) -> Unit).() -> CoroutineExceptionHandler = {
     CoroutineExceptionHandler { _, throwable -> this(throwable) }
+}
+
+private val jobs: MutableMap<String, Job> = mutableMapOf()
+fun Job.cancelLast(): Job = apply {
+    val trace = Thread.currentThread().stackTrace[4]
+    val tag = trace.methodName + trace.lineNumber
+    jobs[tag]?.cancel()
+    jobs[tag] = apply {
+        invokeOnCompletion { jobs.remove(tag) }
+    }
 }
