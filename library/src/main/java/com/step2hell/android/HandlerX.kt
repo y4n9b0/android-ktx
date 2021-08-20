@@ -8,20 +8,24 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
 @Deprecated(
-    "Cannot avoid passing argument Looper!",
-    replaceWith = ReplaceWith("Extended function LifecycleOwner#lifecycleHandler(Looper)"),
+    "Cannot avoid passing arguments Looper and Handler.Callback!",
+    replaceWith = ReplaceWith("Extended function LifecycleOwner#lifecycleHandler(Looper, Handler.Callback)"),
     level = DeprecationLevel.HIDDEN
 )
-val lifecycleHandler: LifecycleOwner.(Looper) -> Handler = { looper ->
-    LifecycleHandler(this, looper)
+val lifecycleHandler: LifecycleOwner.(Looper, Handler.Callback?) -> Handler = { looper, callback ->
+    LifecycleHandler(this, looper, callback)
 }
 
-fun LifecycleOwner.lifecycleHandler(looper: Looper = Looper.getMainLooper()): Handler = LifecycleHandler(this, looper)
+fun LifecycleOwner.lifecycleHandler(
+    looper: Looper = Looper.getMainLooper(),
+    callback: Handler.Callback? = null
+): Handler = LifecycleHandler(this, looper, callback)
 
 private class LifecycleHandler(
     private val owner: LifecycleOwner,
-    looper: Looper = Looper.getMainLooper()
-) : Handler(looper), LifecycleObserver {
+    looper: Looper = Looper.getMainLooper(),
+    callback: Callback? = null
+) : Handler(looper, callback), LifecycleObserver {
     init {
         owner.lifecycle.addObserver(this)
     }
