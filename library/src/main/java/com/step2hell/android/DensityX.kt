@@ -13,10 +13,10 @@ val Number.sp2px
     get() = toFloat().times(metrics.scaledDensity).roundToInt()
 
 val Number.px2dp
-    get() = toFloat().div(metrics.density).roundToInt()
+    get() = toFloat().div(metrics.density)
 
 val Number.px2sp
-    get() = toFloat().div(metrics.scaledDensity).roundToInt()
+    get() = toFloat().div(metrics.scaledDensity)
 
 val SCREEN_WIDTH: Int
     get() = metrics.widthPixels
