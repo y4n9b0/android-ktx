@@ -3,8 +3,8 @@ package com.step2hell.android
 import android.content.res.Resources
 import kotlin.math.roundToInt
 
-private val system = Resources.getSystem()
-private val metrics = system.displayMetrics
+private val system get() = Resources.getSystem()
+private val metrics get() = system.displayMetrics
 
 val Number.dp2px
     get() = toFloat().times(metrics.density).roundToInt()
