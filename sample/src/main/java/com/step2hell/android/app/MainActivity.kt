@@ -23,7 +23,13 @@ class MainActivity : AppCompatActivity() {
             onClick = {
                 toast("click onClick $it")
             }
-        ).expandTouchArea(findViewById<ConstraintLayout>(R.id.relative), 50.dp2px, 50.dp2px, 100.dp2px, 0)
+        ).expandTouchArea(
+            findViewById<ConstraintLayout>(R.id.relative),
+            50.dp2px,
+            50.dp2px,
+            100.dp2px,
+            0
+        )
 
         findViewById<TextView>(R.id.text_greeting2).clicks(
             lifecycleScope
@@ -38,5 +44,10 @@ class MainActivity : AppCompatActivity() {
         ).visibleIf(true, View.INVISIBLE)
 
         "screenWidth=$SCREEN_WIDTH screenHeight=$SCREEN_HEIGHT".logd()
+
+        isNetworkAvailable.toString().logd("Bob")
+        NetworkObservable(this).observe(this) {
+            (if (it) "Network Available" else "Network not available").logd("Bob")
+        }
     }
 }
