@@ -1,12 +1,13 @@
 package com.step2hell.android.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.step2hell.android.*
+import com.step2hell.fp.y
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,5 +50,42 @@ class MainActivity : AppCompatActivity() {
         NetworkObservable(this).observe(this) {
             (if (it) "Network Available" else "Network not available").logd("Bob")
         }
+
+        addAll(2, 3, 1, 60, 4, -7)
+        factorial(10)
     }
+
+    private fun addAll(vararg args: Int): Int {
+        val sum = y<Int, Int> { f ->
+            { n ->
+                if (n == 1) args[0]
+                else args[n - 1] + f(n - 1)
+            }
+        }
+        return sum(args.size)
+    }
+
+    private fun addAll2(vararg args: Int) = y<Int, Int> { f ->
+        { n ->
+            if (n == 1) args[0]
+            else args[n - 1] + f(n - 1)
+        }
+    }(args.size)
+
+    private fun factorial(n: Int): Int {
+        val fact = y<Int, Int> { f ->
+            { n ->
+                if (n == 0) 1
+                else n * f(n - 1)
+            }
+        }
+        return fact(n)
+    }
+
+    private fun factorial2(n: Int) = y<Int, Int> { f ->
+        { n ->
+            if (n == 0) 1
+            else n * f(n - 1)
+        }
+    }(n)
 }
