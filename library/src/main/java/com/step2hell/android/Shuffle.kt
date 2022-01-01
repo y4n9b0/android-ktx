@@ -8,13 +8,7 @@ inline fun <reified T> shuffle(list: MutableList<T>) {
             list[i] = list[random].also { list[random] = list[i] }
         }
     } else {
-        val array: Array<T> = list.toTypedArray()
-        shuffle(array)
-        val iterator: MutableListIterator<T> = list.listIterator()
-        repeat(array.size) {
-            iterator.next()
-            iterator.set(array[it])
-        }
+        list.copyFrom(list.toTypedArray().apply(::shuffle))
     }
 }
 
